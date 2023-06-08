@@ -12,11 +12,10 @@ namespace BugTracker.BOL
     public class Projects : BaseEntity
     {
         [Required(ErrorMessage = "Project Name is required")]
-        public string ProjectName { get; set; }
+        public string Name { get; set; }
         public Guid OrgId { get; set; }// foreign key
-
-        [Required(ErrorMessage = "Project Description is required")]
-        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         //Navigations
 
@@ -28,11 +27,12 @@ namespace BugTracker.BOL
 
         }
 
-        public Projects(string projectName, Guid orgId, string description)
+        public Projects(string name, Guid orgId, DateTime startDate, DateTime endDate)
         {
-            ProjectName = projectName;
+            Name = name;
             OrgId = orgId;
-            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
         }
     }
 }

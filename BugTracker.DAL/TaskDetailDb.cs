@@ -10,10 +10,10 @@ namespace BugTracker.DAL
 {
     public interface ITaskDetailDb
     {
-        IEnumerable<TaskDetail> GetAll();
-        TaskDetail GetById(int id);
-        bool Insert(TaskDetail obj);
-        bool Update(TaskDetail obj);
+        IEnumerable<TaskHistory> GetAll();
+        TaskHistory GetById(int id);
+        bool Insert(TaskHistory obj);
+        bool Update(TaskHistory obj);
         bool Delete(int id);
     }
     public class TaskDetailDb : ITaskDetailDb
@@ -23,31 +23,31 @@ namespace BugTracker.DAL
         {
             context = _context;
         }
-        public IEnumerable<TaskDetail> GetAll()
+        public IEnumerable<TaskHistory> GetAll()
         {
-            return context.TaskDetail.ToList();
+            return context.TaskHistory.ToList();
         }
-        public TaskDetail GetById(int id)
+        public TaskHistory GetById(int id)
         {
-            var obj = context.TaskDetail.Find(id);
+            var obj = context.TaskHistory.Find(id);
             return obj;
         }
-        public bool Insert(TaskDetail obj)
+        public bool Insert(TaskHistory obj)
         {
-            context.TaskDetail.Add(obj);
+            context.TaskHistory.Add(obj);
             context.SaveChanges();
             return true;
         }
-        public bool Update(TaskDetail obj)
+        public bool Update(TaskHistory obj)
         {
-            context.TaskDetail.Update(obj);
+            context.TaskHistory.Update(obj);
             context.SaveChanges();
             return true;
         }
         public bool Delete(int id)
         {
-            var obj = context.TaskDetail.Find(id);
-            context.TaskDetail.Remove(obj);
+            var obj = context.TaskHistory.Find(id);
+            context.TaskHistory.Remove(obj);
             context.SaveChanges();
             return true;
         }

@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace BugTracker.BLL
 {
-    public interface ITaskDetailBs
+    public interface IAttachmentMasterBs
     {
-        IEnumerable<TaskHistory> GetAll();
-        TaskHistory GetById(int id);
-        bool Insert(TaskHistory obj);
-        bool Update(TaskHistory obj);
+        IEnumerable<AttachmentMaster> GetAll();
+        AttachmentMaster GetById(int id);
+        bool Insert(AttachmentMaster obj);
+        bool Update(AttachmentMaster obj);
         bool Delete(int id);
     }
-    public class TaskDetailBs : ITaskDetailBs
+    public class AttachmentMasterBs : IAttachmentMasterBs
     {
-        private readonly ITaskDetailDb objDb;
+        private readonly IAttachmentMasterDb objDb;
 
-        public TaskDetailBs(ITaskDetailDb _objDb)
+        public AttachmentMasterBs(IAttachmentMasterDb _objDb)
         {
             objDb = _objDb;
         }
-        public IEnumerable<TaskHistory> GetAll()
+        public IEnumerable<AttachmentMaster> GetAll()
         {
             return objDb.GetAll();
         }
-        public TaskHistory GetById(int id)
+        public AttachmentMaster GetById(int id)
         {
             return objDb.GetById(id);
         }
-        public bool Insert(TaskHistory obj)
+        public bool Insert(AttachmentMaster obj)
         {
             return objDb.Insert(obj);
         }
-        public bool Update(TaskHistory obj)
+        public bool Update(AttachmentMaster obj)
         {
             return objDb.Update(obj);
         }
