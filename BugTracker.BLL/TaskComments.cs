@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace BugTracker.BLL
 {
-    public interface IOrganizationUsersBs
+    public interface ITaskCommentsBs
     {
-        IEnumerable<OrganizationUsers> GetAll();
-        OrganizationUsers GetById(int id);
-        bool Insert(OrganizationUsers obj);
-        bool Update(OrganizationUsers obj);
+        IEnumerable<TaskComments> GetAll();
+        TaskComments GetById(int id);
+        bool Insert(TaskComments obj);
+        bool Update(TaskComments obj);
         bool Delete(int id);
     }
-    public class OrganizationUsersBs : IOrganizationUsersBs
+    public class TaskCommentsBs : ITaskCommentsBs
     {
-        private readonly IOrganizationUsersDb objDb;
+        private readonly ITaskCommentsDb objDb;
 
-        public OrganizationUsersBs(IOrganizationUsersDb _objDb)
+        public TaskCommentsBs(ITaskCommentsDb _objDb)
         {
             objDb = _objDb;
         }
-        public IEnumerable<OrganizationUsers> GetAll()
+        public IEnumerable<TaskComments> GetAll()
         {
             return objDb.GetAll();
         }
-        public OrganizationUsers GetById(int id)
+        public TaskComments GetById(int id)
         {
             return objDb.GetById(id);
         }
-        public bool Insert(OrganizationUsers obj)
+        public bool Insert(TaskComments obj)
         {
             return objDb.Insert(obj);
         }
-        public bool Update(OrganizationUsers obj)
+        public bool Update(TaskComments obj)
         {
             return objDb.Update(obj);
         }

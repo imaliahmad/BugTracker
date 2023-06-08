@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace BugTracker.BLL
 {
-    public interface IOrganizationRolesBs
+    public interface ITaskAttachmentsBs
     {
-        IEnumerable<OrganizationRoles> GetAll();
-        OrganizationRoles GetById(int id);
-        bool Insert(OrganizationRoles obj);
-        bool Update(OrganizationRoles obj);
+        IEnumerable<TaskAttachments> GetAll();
+        TaskAttachments GetById(int id);
+        bool Insert(TaskAttachments obj);
+        bool Update(TaskAttachments obj);
         bool Delete(int id);
     }
-    public class OrganizationRolesBs : IOrganizationRolesBs
+    public class TaskAttachmentsBs : ITaskAttachmentsBs
     {
-        private readonly IOrganizationRolesDb objDb;
+        private readonly ITaskAttachmentsDb objDb;
 
-        public OrganizationRolesBs(IOrganizationRolesDb _objDb)
+        public TaskAttachmentsBs(ITaskAttachmentsDb _objDb)
         {
             objDb = _objDb;
         }
-        public IEnumerable<OrganizationRoles> GetAll()
+        public IEnumerable<TaskAttachments> GetAll()
         {
             return objDb.GetAll();
         }
-        public OrganizationRoles GetById(int id)
+        public TaskAttachments GetById(int id)
         {
             return objDb.GetById(id);
         }
-        public bool Insert(OrganizationRoles obj)
+        public bool Insert(TaskAttachments obj)
         {
             return objDb.Insert(obj);
         }
-        public bool Update(OrganizationRoles obj)
+        public bool Update(TaskAttachments obj)
         {
             return objDb.Update(obj);
         }

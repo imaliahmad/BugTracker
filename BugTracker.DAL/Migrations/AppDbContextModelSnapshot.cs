@@ -22,52 +22,11 @@ namespace BugTracker.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BugTracker.BOL.OrganizationRoles", b =>
+            modelBuilder.Entity("BugTracker.BOL.AppUsers", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrganizationRoles");
-                });
-
-            modelBuilder.Entity("BugTracker.BOL.Organizations", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organizations");
-                });
-
-            modelBuilder.Entity("BugTracker.BOL.OrganizationUsers", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -80,10 +39,7 @@ namespace BugTracker.DAL.Migrations
                     b.Property<Guid>("OrgId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OrgRolesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhoneNo")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -91,16 +47,50 @@ namespace BugTracker.DAL.Migrations
 
                     b.HasIndex("OrgId");
 
-                    b.HasIndex("OrgRolesId");
-
-                    b.ToTable("OrganizationUsers");
+                    b.ToTable("AppUsers");
                 });
 
-            modelBuilder.Entity("BugTracker.BOL.ProjectRoles", b =>
+            modelBuilder.Entity("BugTracker.BOL.AttachmentMaster", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AttachmentMaster");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.Organizations", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("ContactNo")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -108,7 +98,7 @@ namespace BugTracker.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectRoles");
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("BugTracker.BOL.Projects", b =>
@@ -117,16 +107,18 @@ namespace BugTracker.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("OrgId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -144,9 +136,6 @@ namespace BugTracker.DAL.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProjectRolesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -154,33 +143,45 @@ namespace BugTracker.DAL.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("ProjectRolesId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("ProjectUser");
                 });
 
-            modelBuilder.Entity("BugTracker.BOL.TaskDetail", b =>
+            modelBuilder.Entity("BugTracker.BOL.TaskAttachments", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProjectUserId")
+                    b.Property<Guid>("AttachmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskAttachments");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.TaskComments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -189,17 +190,47 @@ namespace BugTracker.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectUserId");
+                    b.HasIndex("CreatedUserId");
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskDetail");
+                    b.ToTable("TaskComments");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.TaskHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssigneeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskHistory");
                 });
 
             modelBuilder.Entity("BugTracker.BOL.Tasks", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -210,31 +241,35 @@ namespace BugTracker.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProjectUserId")
+                    b.Property<int?>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TaskNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectUserId");
+                    b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("BugTracker.BOL.OrganizationUsers", b =>
+            modelBuilder.Entity("BugTracker.BOL.AppUsers", b =>
                 {
                     b.HasOne("BugTracker.BOL.Organizations", "Organizations")
-                        .WithMany("OrganizationUsers")
+                        .WithMany("AppUsers")
                         .HasForeignKey("OrgId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("BugTracker.BOL.OrganizationRoles", "OrganizationRoles")
-                        .WithMany("OrganizationUsers")
-                        .HasForeignKey("OrgRolesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("OrganizationRoles");
 
                     b.Navigation("Organizations");
                 });
@@ -258,13 +293,7 @@ namespace BugTracker.DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BugTracker.BOL.ProjectRoles", "ProjectRoles")
-                        .WithMany("ProjectUser")
-                        .HasForeignKey("ProjectRolesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BugTracker.BOL.OrganizationUsers", "OrganizationUsers")
+                    b.HasOne("BugTracker.BOL.AppUsers", "OrganizationUsers")
                         .WithMany("ProjectUser")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -272,21 +301,57 @@ namespace BugTracker.DAL.Migrations
 
                     b.Navigation("OrganizationUsers");
 
-                    b.Navigation("ProjectRoles");
-
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("BugTracker.BOL.TaskDetail", b =>
+            modelBuilder.Entity("BugTracker.BOL.TaskAttachments", b =>
                 {
-                    b.HasOne("BugTracker.BOL.ProjectUser", "ProjectUser")
-                        .WithMany("TaskDetail")
-                        .HasForeignKey("ProjectUserId")
+                    b.HasOne("BugTracker.BOL.AttachmentMaster", "AttachmentMaster")
+                        .WithMany("TaskAttachments")
+                        .HasForeignKey("AttachmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugTracker.BOL.Tasks", "Tasks")
+                        .WithMany("TaskAttachments")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttachmentMaster");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.TaskComments", b =>
+                {
+                    b.HasOne("BugTracker.BOL.ProjectUser", "ProjectUser")
+                        .WithMany("TaskComments")
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BugTracker.BOL.Tasks", "Tasks")
+                        .WithMany("TaskComments")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProjectUser");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.TaskHistory", b =>
+                {
+                    b.HasOne("BugTracker.BOL.ProjectUser", "ProjectUser")
                         .WithMany("TaskDetail")
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BugTracker.BOL.Tasks", "Tasks")
+                        .WithMany("TaskHistory")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -300,31 +365,34 @@ namespace BugTracker.DAL.Migrations
                 {
                     b.HasOne("BugTracker.BOL.ProjectUser", "ProjectUser")
                         .WithMany("Tasks")
-                        .HasForeignKey("ProjectUserId")
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BugTracker.BOL.Projects", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ProjectUser");
+
+                    b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("BugTracker.BOL.OrganizationRoles", b =>
+            modelBuilder.Entity("BugTracker.BOL.AppUsers", b =>
                 {
-                    b.Navigation("OrganizationUsers");
+                    b.Navigation("ProjectUser");
+                });
+
+            modelBuilder.Entity("BugTracker.BOL.AttachmentMaster", b =>
+                {
+                    b.Navigation("TaskAttachments");
                 });
 
             modelBuilder.Entity("BugTracker.BOL.Organizations", b =>
                 {
-                    b.Navigation("OrganizationUsers");
-                });
-
-            modelBuilder.Entity("BugTracker.BOL.OrganizationUsers", b =>
-                {
-                    b.Navigation("ProjectUser");
-                });
-
-            modelBuilder.Entity("BugTracker.BOL.ProjectRoles", b =>
-                {
-                    b.Navigation("ProjectUser");
+                    b.Navigation("AppUsers");
                 });
 
             modelBuilder.Entity("BugTracker.BOL.Projects", b =>
@@ -334,6 +402,8 @@ namespace BugTracker.DAL.Migrations
 
             modelBuilder.Entity("BugTracker.BOL.ProjectUser", b =>
                 {
+                    b.Navigation("TaskComments");
+
                     b.Navigation("TaskDetail");
 
                     b.Navigation("Tasks");
@@ -341,7 +411,11 @@ namespace BugTracker.DAL.Migrations
 
             modelBuilder.Entity("BugTracker.BOL.Tasks", b =>
                 {
-                    b.Navigation("TaskDetail");
+                    b.Navigation("TaskAttachments");
+
+                    b.Navigation("TaskComments");
+
+                    b.Navigation("TaskHistory");
                 });
 #pragma warning restore 612, 618
         }

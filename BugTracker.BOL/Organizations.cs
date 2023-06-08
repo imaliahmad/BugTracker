@@ -14,24 +14,22 @@ namespace BugTracker.BOL
 
         [Required(ErrorMessage = "Organization Name is required")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Organization Description is required")]
-        public string Description { get; set; }
+        public string Email { get; set; }
+        public double ContactNo { get; set; }
 
         //Navigate
-        public virtual IEnumerable<OrganizationUsers> OrganizationUsers { get; set; }
+        public virtual IEnumerable<AppUsers> AppUsers { get; set; }
         
         public Organizations()
         {
 
         }
 
-        public Organizations(string name, string description):base(Guid.NewGuid())
+        public Organizations(string name, string email, double contactNo)
         {
             Name = name;
-            Description = description;
-            OrganizationUsers = null;
-
+            Email = email;
+            ContactNo = contactNo;
         }
     }
 }

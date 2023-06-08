@@ -12,29 +12,26 @@ namespace BugTracker.BOL
     public class ProjectUser : BaseEntity
     {
         public Guid ProjectId { get; set; }// foreign key
-        public Guid ProjectRolesId { get; set; }// foreign key
         public Guid UserId { get; set; }
 
         //Navigations
         [ForeignKey("ProjectId")]
         public virtual Projects? Projects { get; set; }
-
-        [ForeignKey("ProjectRolesId")]
-        public virtual ProjectRoles? ProjectRoles { get; set; }
+        
 
         [ForeignKey("UserId")]
-        public virtual OrganizationUsers? OrganizationUsers { get; set; }
+        public virtual AppUsers? OrganizationUsers { get; set; }
         public virtual IEnumerable<Tasks> Tasks { get; set; }
-        public virtual IEnumerable<TaskDetail> TaskDetail { get; set; }
+        public virtual IEnumerable<TaskHistory> TaskDetail { get; set; }
+        public virtual IEnumerable<TaskComments> TaskComments { get; set; }
         public ProjectUser()
         {
 
         }
 
-        public ProjectUser(Guid projectId, Guid projectRolesId, Guid userId)
+        public ProjectUser(Guid projectId, Guid userId)
         {
             ProjectId = projectId;
-            ProjectRolesId = projectRolesId;
             UserId = userId;
         }
     }

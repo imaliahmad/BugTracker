@@ -13,7 +13,7 @@ namespace BugTracker.DAL.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=MEHROZQAZI-PC\SQLEXPRESS;Database=BugTracker;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=MEHROZQAZI-PC\SQLEXPRESS;Database=BugTrackerA;Trusted_Connection=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,14 +38,16 @@ namespace BugTracker.DAL.Data
 
         //Db Set
         public DbSet<Organizations> Organizations { get; set; }
-        public DbSet<OrganizationRoles> OrganizationRoles { get; set; }
-        public DbSet<OrganizationUsers> OrganizationUsers { get; set; }
+        public DbSet<AppUsers> AppUsers { get; set; }
         public DbSet<Projects> Projects{ get; set; }
-        public DbSet<ProjectRoles> ProjectRoles { get; set; }
         public DbSet<ProjectUser> ProjectUser { get; set; }
-
         public DbSet<Tasks> Tasks { get; set; }
-        public DbSet<TaskDetail> TaskDetail { get; set; }
+        public DbSet<TaskHistory> TaskHistory { get; set; }
+        public DbSet<AttachmentMaster> AttachmentMaster { get; set; }
+        public DbSet<TaskAttachments> TaskAttachments { get; set; }
+        public DbSet<TaskComments> TaskComments{ get; set; }
+
+
 
     }
 
