@@ -11,10 +11,10 @@ namespace BugTracker.DAL
     public interface IOrganizationsDb
     {
         IEnumerable<Organizations> GetAll();
-        Organizations GetById(int id);
-        bool Insert(Organizations obj);
-        bool Update(Organizations obj);
-        bool Delete(int id);
+        Organizations GetById(Guid id);
+        Organizations Insert(Organizations obj);
+        Organizations Update(Organizations obj);
+        bool Delete(Guid id);
     }
     public class OrganizationsDb : IOrganizationsDb
     {
@@ -27,24 +27,24 @@ namespace BugTracker.DAL
         {
             return context.Organizations.ToList();
         }
-        public Organizations GetById(int id)
+        public Organizations GetById(Guid id)
         {
             var obj = context.Organizations.Find(id);
             return obj;
         }
-        public bool Insert(Organizations obj)
+        public Organizations Insert(Organizations obj)
         {
             context.Organizations.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
-        public bool Update(Organizations obj)
+        public Organizations Update(Organizations obj)
         {
             context.Organizations.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.Organizations.Find(id);
             context.Organizations.Remove(obj);

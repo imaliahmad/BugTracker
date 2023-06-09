@@ -18,7 +18,7 @@ namespace BugTracker.BOL
         public double ContactNo { get; set; }
 
         //Navigate
-        public virtual IEnumerable<AppUsers> AppUsers { get; set; }
+        public virtual IEnumerable<AppUsers>? AppUsers { get; set; }
         
         public Organizations()
         {

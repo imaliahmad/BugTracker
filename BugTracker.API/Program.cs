@@ -1,4 +1,29 @@
+
+using BugTracker.BLL;
+using BugTracker.DAL;
+using BugTracker.DAL.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+
+//Service cors
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
+{
+    builder.WithOrigins("").
+            AllowAnyMethod()
+           .AllowAnyHeader();
+           
+}));
+builder.Services.AddTransient<IOrganizationsDb, OrganizationsDb>();
+
+builder.Services.AddTransient<IOrganizationsBs, OrganizationsBs>();
+
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseSqlServer(@"Server=MEHROZQAZI-PC\SQLEXPRESS;Database=BugTrackerA;Trusted_Connection=True"));
+
+
+//enable cors
 
 // Add services to the container.
 
@@ -23,7 +48,9 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 });
-
+app.UseCors("corspolicy");
+app.UseRouting();
+app.MapControllers();
 app.Run();
 
 internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)

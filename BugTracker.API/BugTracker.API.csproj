@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BugTracker.BLL\BugTracker.BLL.csproj" />
+    <ProjectReference Include="..\BugTracker.BOL\BugTracker.BOL.csproj" />
+  </ItemGroup>
+
 </Project>
