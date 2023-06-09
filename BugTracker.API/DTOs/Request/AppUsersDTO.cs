@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using BugTracker.BOL;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace BugTracker.BOL
+namespace BugTracker.API.DTOs.Request
 {
-    [Table("OrganizationUsers")]
-    public class AppUsers : BaseEntity
+    public class AppUsersDTO: BaseEntityDTO
     {
-        /// <summary>
-        /// Gets or sets the name of the user.
-        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
@@ -48,26 +39,36 @@ namespace BugTracker.BOL
         public virtual IEnumerable<ProjectUser> ProjectUser { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the AppUsers class.
+        /// Converts an OrganizationsDTO object to an Organizations model.
         /// </summary>
-        public AppUsers()
+        /// <param name="orgDTO">The OrganizationsDTO object to convert.</param>
+        /// <returns>The converted Organizations model.</returns>
+        public static AppUsers ToAppUsersModel(AppUsersDTO userDTO)
         {
+            var user = new AppUsers();
+            user.Id = userDTO.Id;
+            user.OrgId = userDTO.OrgId;
+            user.Email = userDTO.Email;
+            user.Password = userDTO.Password;
+            
 
+            return user;
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppUsers class with the specified parameters.
+        /// Converts an Organizations model to an OrganizationsDTO object.
         /// </summary>
-        /// <param name="name">The name of the user.</param>
-        /// <param name="orgId">The organization ID.</param>
-        /// <param name="email">The email of the user.</param>
-        /// <param name="password">The password of the user.</param>
-        public AppUsers(string name, Guid orgId, string email, string password)
+        /// <param name="model">The Organizations model to convert.</param>
+        /// <returns>The converted OrganizationsDTO object.</returns>
+        public static AppUsersDTO ToAppUsersDTO(AppUsers model)
         {
-            Name = name;
-            OrgId = orgId;
-            Email = email;
-            Password = password;
+            var userDTO = new AppUsersDTO();
+            userDTO.Id = model.Id;
+            userDTO.OrgId = model.OrgId;
+            userDTO.Email = model.Email;
+            userDTO.Password = model.Password;
+
+            return userDTO;
         }
     }
 }
