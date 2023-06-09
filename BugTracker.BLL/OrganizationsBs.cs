@@ -11,10 +11,10 @@ namespace BugTracker.BLL
     public interface IOrganizationsBs
     {
         IEnumerable<Organizations> GetAll();
-        Organizations GetById(int id);
-        bool Insert(Organizations obj);
-        bool Update(Organizations obj);
-        bool Delete(int id);
+        Organizations GetById(Guid id);
+        Organizations Insert(Organizations obj);
+        Organizations Update(Organizations obj);
+        bool Delete(Guid id);
     }
     public class OrganizationsBs : IOrganizationsBs
     {
@@ -28,19 +28,19 @@ namespace BugTracker.BLL
         {
             return objDb.GetAll();
         }
-        public Organizations GetById(int id)
+        public Organizations GetById(Guid id)
         {
             return objDb.GetById(id);
         }
-        public bool Insert(Organizations obj)
+        public Organizations Insert(Organizations obj)
         {
             return objDb.Insert(obj);
         }
-        public bool Update(Organizations obj)
+        public Organizations Update(Organizations obj)
         {
             return objDb.Update(obj);
         }
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }

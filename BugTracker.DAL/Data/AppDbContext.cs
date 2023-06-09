@@ -10,11 +10,10 @@ namespace BugTracker.DAL.Data
 {
    public class AppDbContext:DbContext
    {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=MEHROZQAZI-PC\SQLEXPRESS;Database=BugTrackerA;Trusted_Connection=True");
-        }
+            public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+            {
+
+            }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null)
