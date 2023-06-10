@@ -19,12 +19,14 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
 builder.Services.AddTransient<IOrganizationsDb, OrganizationsDb>();
 builder.Services.AddTransient<IAppUsersDb, AppUsersDb>();
 builder.Services.AddTransient<IProjectsDb, ProjectsDb>();
+builder.Services.AddTransient<IProjectUserDb, ProjectUserDb>();
 #endregion
 
 #region BLL
 builder.Services.AddTransient<IOrganizationsBs, OrganizationsBs>();
 builder.Services.AddTransient<IAppUsersBs, AppUsersBs>();
-builder.Services.AddTransient<IProjectsBs, ProjectsBs>(); 
+builder.Services.AddTransient<IProjectsBs, ProjectsBs>();
+builder.Services.AddTransient<IProjectUserBs, ProjectUserBs>();
 #endregion
 
 

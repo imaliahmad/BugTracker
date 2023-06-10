@@ -24,28 +24,28 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the project user.</param>
         /// <returns>The project user.</returns>
-        ProjectUser GetById(int id);
+        ProjectUser GetById(Guid id);
 
         /// <summary>
         /// Inserts a new project user.
         /// </summary>
         /// <param name="obj">The project user object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(ProjectUser obj);
+        ProjectUser Insert(ProjectUser obj);
 
         /// <summary>
         /// Updates an existing project user.
         /// </summary>
         /// <param name="obj">The project user object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(ProjectUser obj);
+        ProjectUser Update(ProjectUser obj);
 
         /// <summary>
         /// Deletes a project user by ID.
         /// </summary>
         /// <param name="id">The ID of the project user to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -71,25 +71,25 @@ namespace BugTracker.BLL
         }
 
         
-        public ProjectUser GetById(int id)
+        public ProjectUser GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
         
-        public bool Insert(ProjectUser obj)
+        public ProjectUser Insert(ProjectUser obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(ProjectUser obj)
+        public ProjectUser Update(ProjectUser obj)
         {
             return objDb.Update(obj);
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }
