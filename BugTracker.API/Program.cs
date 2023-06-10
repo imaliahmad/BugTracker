@@ -15,11 +15,17 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
            .AllowAnyHeader();
            
 }));
+#region DAL
 builder.Services.AddTransient<IOrganizationsDb, OrganizationsDb>();
 builder.Services.AddTransient<IAppUsersDb, AppUsersDb>();
+builder.Services.AddTransient<IProjectsDb, ProjectsDb>();
+#endregion
 
+#region BLL
 builder.Services.AddTransient<IOrganizationsBs, OrganizationsBs>();
 builder.Services.AddTransient<IAppUsersBs, AppUsersBs>();
+builder.Services.AddTransient<IProjectsBs, ProjectsBs>(); 
+#endregion
 
 
 builder.Services.AddDbContext<AppDbContext>(

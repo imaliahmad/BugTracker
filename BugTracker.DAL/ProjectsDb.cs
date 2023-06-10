@@ -24,28 +24,28 @@ namespace BugTracker.DAL
         /// </summary>
         /// <param name="id">The ID of the project.</param>
         /// <returns>The project.</returns>
-        Projects GetById(int id);
+        Projects GetById(Guid id);
 
         /// <summary>
         /// Inserts a new project.
         /// </summary>
         /// <param name="obj">The project object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(Projects obj);
+        Projects Insert(Projects obj);
 
         /// <summary>
         /// Updates an existing project.
         /// </summary>
         /// <param name="obj">The project object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(Projects obj);
+        Projects Update(Projects obj);
 
         /// <summary>
         /// Deletes a project by ID.
         /// </summary>
         /// <param name="id">The ID of the project to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -70,30 +70,30 @@ namespace BugTracker.DAL
         }
 
         
-        public Projects GetById(int id)
+        public Projects GetById(Guid id)
         {
             var obj = context.Projects.Find(id);
             return obj;
         }
 
         
-        public bool Insert(Projects obj)
+        public Projects Insert(Projects obj)
         {
             context.Projects.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
        
-        public bool Update(Projects obj)
+        public Projects Update(Projects obj)
         {
             context.Projects.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.Projects.Find(id);
             context.Projects.Remove(obj);
