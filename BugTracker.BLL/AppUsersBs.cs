@@ -11,7 +11,7 @@ namespace BugTracker.BLL
     /// <summary>
     /// Represents the business logic operations for organization users.
     /// </summary>
-    public interface IOrganizationUsersBs
+    public interface IAppUsersBs
     {
         /// <summary>
         /// Gets all organization users.
@@ -24,42 +24,42 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the organization user.</param>
         /// <returns>The organization user.</returns>
-        AppUsers GetById(int id);
+        AppUsers GetById(Guid id);
 
         /// <summary>
         /// Inserts a new organization user.
         /// </summary>
         /// <param name="obj">The organization user object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(AppUsers obj);
+        AppUsers Insert(AppUsers obj);
 
         /// <summary>
         /// Updates an existing organization user.
         /// </summary>
         /// <param name="obj">The organization user object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(AppUsers obj);
+        AppUsers Update(AppUsers obj);
 
         /// <summary>
         /// Deletes an organization user by ID.
         /// </summary>
         /// <param name="id">The ID of the organization user to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
     /// Represents the implementation of the organization users business logic operations.
     /// </summary>
-    public class AppUsersBs : IOrganizationUsersBs
+    public class AppUsersBs : IAppUsersBs
     {
-        private readonly IOrganizationUsersDb objDb;
+        private readonly IAppUsersDb objDb;
 
         /// <summary>
         /// Initializes a new instance of the AppUsersBs class with the specified organization users database.
         /// </summary>
         /// <param name="_objDb">The organization users database implementation.</param>
-        public AppUsersBs(IOrganizationUsersDb _objDb)
+        public AppUsersBs(IAppUsersDb _objDb)
         {
             objDb = _objDb;
         }
@@ -71,25 +71,25 @@ namespace BugTracker.BLL
         }
 
         
-        public AppUsers GetById(int id)
+        public AppUsers GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
        
-        public bool Insert(AppUsers obj)
+        public AppUsers Insert(AppUsers obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(AppUsers obj)
+        public AppUsers Update(AppUsers obj)
         {
             return objDb.Update(obj);
         }
 
         
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }

@@ -11,7 +11,7 @@ namespace BugTracker.DAL
     /// <summary>
     /// Represents the database operations for organization users.
     /// </summary>
-    public interface IOrganizationUsersDb
+    public interface IAppUsersDb
     {
         /// <summary>
         /// Gets all the organization users.
@@ -24,34 +24,34 @@ namespace BugTracker.DAL
         /// </summary>
         /// <param name="id">The ID of the organization user.</param>
         /// <returns>The organization user.</returns>
-        AppUsers GetById(int id);
+        AppUsers GetById(Guid id);
 
         /// <summary>
         /// Inserts a new organization user.
         /// </summary>
         /// <param name="obj">The organization user object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(AppUsers obj);
+        AppUsers Insert(AppUsers obj);
 
         /// <summary>
         /// Updates an existing organization user.
         /// </summary>
         /// <param name="obj">The organization user object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(AppUsers obj);
+       AppUsers Update(AppUsers obj);
 
         /// <summary>
         /// Deletes an organization user by ID.
         /// </summary>
         /// <param name="id">The ID of the organization user to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
     /// Represents the implementation of the organization users database operations.
     /// </summary>
-    public class AppUsersDb : IOrganizationUsersDb
+    public class AppUsersDb : IAppUsersDb
     {
         private AppDbContext context;
 
@@ -69,30 +69,30 @@ namespace BugTracker.DAL
             return context.AppUsers.ToList();
         }
 
-        public AppUsers GetById(int id)
+        public AppUsers GetById(Guid id)
         {
             var obj = context.AppUsers.Find(id);
             return obj;
         }
 
         
-        public bool Insert(AppUsers obj)
+        public AppUsers Insert(AppUsers obj)
         {
             context.AppUsers.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
        
-        public bool Update(AppUsers obj)
+        public AppUsers Update(AppUsers obj)
         {
             context.AppUsers.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
         
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.AppUsers.Find(id);
             context.AppUsers.Remove(obj);

@@ -16,8 +16,11 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
            
 }));
 builder.Services.AddTransient<IOrganizationsDb, OrganizationsDb>();
+builder.Services.AddTransient<IAppUsersDb, AppUsersDb>();
 
 builder.Services.AddTransient<IOrganizationsBs, OrganizationsBs>();
+builder.Services.AddTransient<IAppUsersBs, AppUsersBs>();
+
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(@"Server=MEHROZQAZI-PC\SQLEXPRESS;Database=BugTrackerA;Trusted_Connection=True"));
