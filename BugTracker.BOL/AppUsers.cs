@@ -15,7 +15,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Gets or sets the name of the user.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Gets or sets the organization ID (foreign key).
@@ -45,7 +45,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Gets or sets the collection of project users associated with the user.
         /// </summary>
-        public virtual IEnumerable<ProjectUser> ProjectUser { get; set; }
+        public virtual IEnumerable<ProjectUser>? ProjectUser { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the AppUsers class.

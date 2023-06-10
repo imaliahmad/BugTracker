@@ -4,12 +4,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.API.DTOs.Request
 {
+    /// <summary>
+    /// Represents the DTO for AppUsers.
+    /// </summary>
     public class AppUsersDTO: BaseEntityDTO
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the name of user
+        /// </summary>
+        public string? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the organization ID (foreign key).
+        /// Gets or sets the id of organization (foreign key)
         /// </summary>
         public Guid OrgId { get; set; }
 
@@ -36,17 +42,18 @@ namespace BugTracker.API.DTOs.Request
         /// <summary>
         /// Gets or sets the collection of project users associated with the user.
         /// </summary>
-        public virtual IEnumerable<ProjectUser> ProjectUser { get; set; }
+        public virtual IEnumerable<ProjectUser>? ProjectUser { get; set; }
 
         /// <summary>
-        /// Converts an OrganizationsDTO object to an Organizations model.
+        /// Converts an AppUsersDTO object to an AppUsers model.
         /// </summary>
-        /// <param name="orgDTO">The OrganizationsDTO object to convert.</param>
-        /// <returns>The converted Organizations model.</returns>
+        /// <param name="orgDTO">The AppUsersDTO object to convert.</param>
+        /// <returns>The converted AppUsers model.</returns>
         public static AppUsers ToAppUsersModel(AppUsersDTO userDTO)
         {
             var user = new AppUsers();
             user.Id = userDTO.Id;
+            user.Name = userDTO.Name;
             user.OrgId = userDTO.OrgId;
             user.Email = userDTO.Email;
             user.Password = userDTO.Password;
@@ -56,14 +63,15 @@ namespace BugTracker.API.DTOs.Request
         }
 
         /// <summary>
-        /// Converts an Organizations model to an OrganizationsDTO object.
+        /// Converts an AppUsers model to an AppUsersDTO object.
         /// </summary>
-        /// <param name="model">The Organizations model to convert.</param>
-        /// <returns>The converted OrganizationsDTO object.</returns>
+        /// <param name="model">The AppUsers model to convert.</param>
+        /// <returns>The converted AppUsersDTO object.</returns>
         public static AppUsersDTO ToAppUsersDTO(AppUsers model)
         {
             var userDTO = new AppUsersDTO();
             userDTO.Id = model.Id;
+            userDTO.Name = model.Name;
             userDTO.OrgId = model.OrgId;
             userDTO.Email = model.Email;
             userDTO.Password = model.Password;

@@ -81,7 +81,8 @@ namespace BugTracker.API.Controllers
         {
             try
             {
-                Organizations organizations = organizationsBs.Insert(OrganizationsDTO.ToOrganizationsModel(orgDTO));
+                Organizations organizations = organizationsBs.Insert(
+                                                   OrganizationsDTO.ToOrganizationsModel(orgDTO));
 
                 orgDTO = OrganizationsDTO.ToOrganizationsDTO(organizations);
                 return Ok(orgDTO);
