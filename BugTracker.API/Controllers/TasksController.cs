@@ -79,8 +79,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 Tasks Tasks = TasksBs.Insert(
-                                         TasksDTO.ToTasksModel(TasksDTO)
-                                    );
+                                     TasksDTO.ToTasksModel(TasksDTO)
+                              );
 
                 TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 
@@ -104,8 +104,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 Tasks Tasks = TasksBs.Update(
-                                         TasksDTO.ToTasksModel(TasksDTO)
-                                    );
+                                       TasksDTO.ToTasksModel(TasksDTO)
+                               );
 
                 TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 

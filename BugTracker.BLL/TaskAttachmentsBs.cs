@@ -24,28 +24,28 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the task attachment.</param>
         /// <returns>The task attachment.</returns>
-        TaskAttachments GetById(int id);
+        TaskAttachments GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task attachment.
         /// </summary>
         /// <param name="obj">The task attachment object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(TaskAttachments obj);
+        TaskAttachments Insert(TaskAttachments obj);
 
         /// <summary>
         /// Updates an existing task attachment.
         /// </summary>
         /// <param name="obj">The task attachment object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(TaskAttachments obj);
+        TaskAttachments Update(TaskAttachments obj);
 
         /// <summary>
         /// Deletes a task attachment by ID.
         /// </summary>
         /// <param name="id">The ID of the task attachment to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -71,25 +71,25 @@ namespace BugTracker.BLL
         }
 
         
-        public TaskAttachments GetById(int id)
+        public TaskAttachments GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
         
-        public bool Insert(TaskAttachments obj)
+        public TaskAttachments Insert(TaskAttachments obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(TaskAttachments obj)
+        public TaskAttachments Update(TaskAttachments obj)
         {
             return objDb.Update(obj);
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }
