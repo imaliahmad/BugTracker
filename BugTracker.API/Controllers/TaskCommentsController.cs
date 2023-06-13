@@ -79,8 +79,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 TaskComments TaskComments = TaskCommentsBs.Insert(
-                                         TaskCommentsDTO.ToTaskCommentsModel(TaskCommentsDTO)
-                                    );
+                                              TaskCommentsDTO.ToTaskCommentsModel(TaskCommentsDTO)
+                                            );
 
                 TaskCommentsDTO = TaskCommentsDTO.ToTaskCommentsDTO(TaskComments);
 
@@ -104,8 +104,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 TaskComments TaskComments = TaskCommentsBs.Update(
-                                         TaskCommentsDTO.ToTaskCommentsModel(TaskCommentsDTO)
-                                    );
+                                              TaskCommentsDTO.ToTaskCommentsModel(TaskCommentsDTO)
+                                            );
 
                 TaskCommentsDTO = TaskCommentsDTO.ToTaskCommentsDTO(TaskComments);
 

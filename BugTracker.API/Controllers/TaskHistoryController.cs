@@ -79,8 +79,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 TaskHistory TaskHistory = TaskHistoryBs.Insert(
-                                         TaskHistoryDTO.ToTaskHistoryModel(TaskHistoryDTO)
-                                    );
+                                            TaskHistoryDTO.ToTaskHistoryModel(TaskHistoryDTO)
+                                          );
 
                 TaskHistoryDTO = TaskHistoryDTO.ToTaskHistoryDTO(TaskHistory);
 
@@ -104,8 +104,8 @@ namespace BugTracker.API.Controllers
             try
             {
                 TaskHistory TaskHistory = TaskHistoryBs.Update(
-                                         TaskHistoryDTO.ToTaskHistoryModel(TaskHistoryDTO)
-                                    );
+                                            TaskHistoryDTO.ToTaskHistoryModel(TaskHistoryDTO)
+                                          );
 
                 TaskHistoryDTO = TaskHistoryDTO.ToTaskHistoryDTO(TaskHistory);
 
