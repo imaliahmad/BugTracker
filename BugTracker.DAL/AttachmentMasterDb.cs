@@ -24,28 +24,28 @@ namespace BugTracker.DAL
         /// </summary>
         /// <param name="id">The ID of the attachment master.</param>
         /// <returns>The attachment master.</returns>
-        AttachmentMaster GetById(int id);
+        AttachmentMaster GetById(Guid id);
 
         /// <summary>
         /// Inserts a new attachment master.
         /// </summary>
         /// <param name="obj">The attachment master object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(AttachmentMaster obj);
+        AttachmentMaster Insert(AttachmentMaster obj);
 
         /// <summary>
         /// Updates an existing attachment master.
         /// </summary>
         /// <param name="obj">The attachment master object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(AttachmentMaster obj);
+        AttachmentMaster Update(AttachmentMaster obj);
 
         /// <summary>
         /// Deletes an attachment master by ID.
         /// </summary>
         /// <param name="id">The ID of the attachment master to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -71,30 +71,30 @@ namespace BugTracker.DAL
         }
 
         
-        public AttachmentMaster GetById(int id)
+        public AttachmentMaster GetById(Guid id)
         {
             var obj = context.AttachmentMaster.Find(id);
             return obj;
         }
 
         
-        public bool Insert(AttachmentMaster obj)
+        public AttachmentMaster Insert(AttachmentMaster obj)
         {
             context.AttachmentMaster.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
         
-        public bool Update(AttachmentMaster obj)
+        public AttachmentMaster Update(AttachmentMaster obj)
         {
             context.AttachmentMaster.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
         
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.AttachmentMaster.Find(id);
             context.AttachmentMaster.Remove(obj);
