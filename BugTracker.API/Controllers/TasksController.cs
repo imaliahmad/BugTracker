@@ -54,10 +54,10 @@ namespace BugTracker.API.Controllers
         {
             try
             {
-                var users = TasksBs.GetById(id);
-                TasksDTO usersDTO = TasksDTO.ToTasksDTO(users);
+                var tasks = TasksBs.GetById(id);
+                TasksDTO tasksDTO = TasksDTO.ToTasksDTO(tasks);
 
-                return Ok(usersDTO);
+                return Ok(tasksDTO);
             }
             catch (Exception ex)
             {
