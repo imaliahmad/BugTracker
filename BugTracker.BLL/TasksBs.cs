@@ -24,28 +24,28 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the task.</param>
         /// <returns>The task.</returns>
-        Tasks GetById(int id);
+        Tasks GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task.
         /// </summary>
         /// <param name="obj">The task object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(Tasks obj);
+        Tasks Insert(Tasks obj);
 
         /// <summary>
         /// Updates an existing task.
         /// </summary>
         /// <param name="obj">The task object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(Tasks obj);
+        Tasks Update(Tasks obj);
 
         /// <summary>
         /// Deletes a task by ID.
         /// </summary>
         /// <param name="id">The ID of the task to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -71,25 +71,25 @@ namespace BugTracker.BLL
         }
 
         
-        public Tasks GetById(int id)
+        public Tasks GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
         
-        public bool Insert(Tasks obj)
+        public Tasks Insert(Tasks obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(Tasks obj)
+        public Tasks Update(Tasks obj)
         {
             return objDb.Update(obj);
         }
 
         
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }

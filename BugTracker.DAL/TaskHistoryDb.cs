@@ -51,7 +51,7 @@ namespace BugTracker.DAL
     /// <summary>
     /// Represents the implementation of the task history details database operations.
     /// </summary>
-    public class TaskDetailDb : ITaskDetailDb
+    public class TaskHistoryDb : ITaskDetailDb
     {
         private AppDbContext context;
 
@@ -59,7 +59,7 @@ namespace BugTracker.DAL
         /// Initializes a new instance of the TaskDetailDb class with the specified database context.
         /// </summary>
         /// <param name="_context">The application database context.</param>
-        public TaskDetailDb(AppDbContext _context)
+        public TaskHistoryDb(AppDbContext _context)
         {
             context = _context;
         }

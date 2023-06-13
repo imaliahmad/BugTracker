@@ -127,18 +127,17 @@ namespace BugTracker.API.Controllers
         /// <param name="id">The ID of the appuser to delete.</param>
         /// <returns>A boolean indicating whether the deletion was successful.</returns>
         [HttpDelete]
-        [Route("delete")]
+        [Route("delete/{Id}")]
         public IActionResult Delete(Guid id)
         {
             try
             {
                 var users = appUsersBs.Delete(id);
-
                 return Ok(users);
             }
             catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex.Message);
             }
         }
     }

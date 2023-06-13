@@ -8,33 +8,33 @@ namespace BugTracker.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectsController : ControllerBase
+    public class TasksController : ControllerBase
     {
-        private readonly IProjectsBs projectsBs;
+        private readonly ITasksBs TasksBs;
 
-        public ProjectsController(IProjectsBs _projectsBs)
+        public TasksController(ITasksBs _TasksBs)
         {
-            projectsBs = _projectsBs;
+            TasksBs = _TasksBs;
         }
 
         /// <summary>
-        /// Retrieves all Projects
+        /// Retrieves all Tasks
         /// </summary>
-        /// <returns>The list of Projects.</returns>
+        /// <returns>The list of Tasks.</returns>
         [HttpGet]
         [Route("getAll")]
         public IActionResult GetAll()
         {
             try
             {
-                Projects[] projectsList = projectsBs.GetAll().ToArray();
-                List<ProjectsDTO> projectsDTOList = new List<ProjectsDTO>();
-                foreach (var item in projectsList)
+                Tasks[] TasksList = TasksBs.GetAll().ToArray();
+                List<TasksDTO> TasksDTOList = new List<TasksDTO>();
+                foreach (var item in TasksList)
                 {
-                    projectsDTOList.Add(ProjectsDTO.ToProjectsDTO(item));
+                    TasksDTOList.Add(TasksDTO.ToTasksDTO(item));
                 }
 
-                return Ok(projectsDTOList.ToArray());
+                return Ok(TasksDTOList.ToArray());
             }
             catch (Exception ex)
             {
@@ -44,18 +44,18 @@ namespace BugTracker.API.Controllers
         }
 
         /// <summary>
-        /// Retrieves an projects by ID.
+        /// Retrieves an Tasks by ID.
         /// </summary>
-        /// <param name="id">The ID of the project.</param>
-        /// <returns>The project.</returns>
+        /// <param name="id">The ID of the task.</param>
+        /// <returns>The task.</returns>
         [HttpGet]
         [Route("getById/{Id}")]
         public IActionResult GetById(Guid id)
         {
             try
             {
-                var users = projectsBs.GetById(id);
-                ProjectsDTO usersDTO = ProjectsDTO.ToProjectsDTO(users);
+                var users = TasksBs.GetById(id);
+                TasksDTO usersDTO = TasksDTO.ToTasksDTO(users);
 
                 return Ok(usersDTO);
             }
@@ -67,24 +67,24 @@ namespace BugTracker.API.Controllers
         }
 
         /// <summary>
-        /// Creates a new project.
+        /// Creates a new task.
         /// </summary>
-        /// <param name="orgDTO">The project data.</param>
-        /// <returns>The created project.</returns>
+        /// <param name="taskDTO">The task data.</param>
+        /// <returns>The created task.</returns>
 
         [HttpPost]
         [Route("create")]
-        public IActionResult Create(ProjectsDTO projectsDTO)
+        public IActionResult Create(TasksDTO TasksDTO)
         {
             try
             {
-                Projects Projects = projectsBs.Insert(
-                                         ProjectsDTO.ToProjectsModel(projectsDTO)
+                Tasks Tasks = TasksBs.Insert(
+                                         TasksDTO.ToTasksModel(TasksDTO)
                                     );
 
-                projectsDTO = ProjectsDTO.ToProjectsDTO(Projects);
+                TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 
-                return Ok(projectsDTO);
+                return Ok(TasksDTO);
             }
             catch (Exception ex)
             {
@@ -93,23 +93,23 @@ namespace BugTracker.API.Controllers
         }
 
         /// <summary>
-        /// Updates an existing project.
+        /// Updates an existing task.
         /// </summary>
-        /// <param name="orgDto">The project data to update.</param>
-        /// <returns>The updated project.</returns>
+        /// <param name="taskDto">The task data to update.</param>
+        /// <returns>The updated task.</returns>
         [HttpPut]
         [Route("update")]
-        public IActionResult Update(ProjectsDTO projectsDTO)
+        public IActionResult Update(TasksDTO TasksDTO)
         {
             try
             {
-                Projects Projects = projectsBs.Update(
-                                         ProjectsDTO.ToProjectsModel(projectsDTO)
+                Tasks Tasks = TasksBs.Update(
+                                         TasksDTO.ToTasksModel(TasksDTO)
                                     );
 
-                projectsDTO = ProjectsDTO.ToProjectsDTO(Projects);
+                TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 
-                return Ok(projectsDTO);
+                return Ok(TasksDTO);
             }
             catch (Exception ex)
             {
@@ -118,9 +118,9 @@ namespace BugTracker.API.Controllers
         }
 
         /// <summary>
-        /// Deletes an project by ID.
+        /// Deletes an task by ID.
         /// </summary>
-        /// <param name="id">The ID of the project to delete.</param>
+        /// <param name="id">The ID of the task to delete.</param>
         /// <returns>A boolean indicating whether the deletion was successful.</returns>
         [HttpDelete]
         [Route("delete/{Id}")]
@@ -128,7 +128,7 @@ namespace BugTracker.API.Controllers
         {
             try
             {
-                var users = projectsBs.Delete(id);
+                var users = TasksBs.Delete(id);
                 return Ok(users);
             }
             catch (Exception ex)

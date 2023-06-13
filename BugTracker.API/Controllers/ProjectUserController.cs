@@ -123,7 +123,7 @@ namespace BugTracker.API.Controllers
         /// <param name="id">The ID of the projectuser to delete.</param>
         /// <returns>A boolean indicating whether the deletion was successful.</returns>
         [HttpDelete]
-        [Route("delete")]
+        [Route("delete/{Id}")]
         public IActionResult Delete(Guid id)
         {
             try
