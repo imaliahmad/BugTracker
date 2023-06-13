@@ -51,7 +51,7 @@ namespace BugTracker.BLL
     /// <summary>
     /// Represents the implementation of the task details business logic operations.
     /// </summary>
-    public class TaskDetailBs : ITaskDetailBs
+    public class TaskHistoryBs : ITaskDetailBs
     {
         private readonly ITaskDetailDb objDb;
 
@@ -59,7 +59,7 @@ namespace BugTracker.BLL
         /// Initializes a new instance of the TaskDetailBs class with the specified task details database.
         /// </summary>
         /// <param name="_objDb">The task details database implementation.</param>
-        public TaskDetailBs(ITaskDetailDb _objDb)
+        public TaskHistoryBs(ITaskDetailDb _objDb)
         {
             objDb = _objDb;
         }

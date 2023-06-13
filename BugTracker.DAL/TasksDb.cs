@@ -24,28 +24,28 @@ namespace BugTracker.DAL
         /// </summary>
         /// <param name="id">The ID of the task.</param>
         /// <returns>The task.</returns>
-        Tasks GetById(int id);
+        Tasks GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task.
         /// </summary>
         /// <param name="obj">The task object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(Tasks obj);
+        Tasks Insert(Tasks obj);
 
         /// <summary>
         /// Updates an existing task.
         /// </summary>
         /// <param name="obj">The task object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(Tasks obj);
+        Tasks Update(Tasks obj);
 
         /// <summary>
         /// Deletes a task by ID.
         /// </summary>
         /// <param name="id">The ID of the task to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -71,30 +71,30 @@ namespace BugTracker.DAL
         }
 
        
-        public Tasks GetById(int id)
+        public Tasks GetById(Guid id)
         {
             var obj = context.Tasks.Find(id);
             return obj;
         }
 
        
-        public bool Insert(Tasks obj)
+        public Tasks Insert(Tasks obj)
         {
             context.Tasks.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
         
-        public bool Update(Tasks obj)
+        public Tasks Update(Tasks obj)
         {
             context.Tasks.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.Tasks.Find(id);
             context.Tasks.Remove(obj);

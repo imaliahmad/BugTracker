@@ -30,7 +30,7 @@ namespace BugTracker.API.DTOs.Request
         /// Gets or sets the user associated with the project user.
         /// </summary>
         [ForeignKey("UserId")]
-        public virtual AppUsers? OrganizationUsers { get; set; }
+        public virtual AppUsers? AppUsers { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of tasks associated with the project user.

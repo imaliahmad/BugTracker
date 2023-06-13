@@ -20,6 +20,8 @@ builder.Services.AddTransient<IOrganizationsDb, OrganizationsDb>();
 builder.Services.AddTransient<IAppUsersDb, AppUsersDb>();
 builder.Services.AddTransient<IProjectsDb, ProjectsDb>();
 builder.Services.AddTransient<IProjectUserDb, ProjectUserDb>();
+builder.Services.AddTransient<ITasksDb, TasksDb>();
+
 #endregion
 
 #region BLL
@@ -27,6 +29,7 @@ builder.Services.AddTransient<IOrganizationsBs, OrganizationsBs>();
 builder.Services.AddTransient<IAppUsersBs, AppUsersBs>();
 builder.Services.AddTransient<IProjectsBs, ProjectsBs>();
 builder.Services.AddTransient<IProjectUserBs, ProjectUserBs>();
+builder.Services.AddTransient<ITasksBs, TasksBs>();
 #endregion
 
 
