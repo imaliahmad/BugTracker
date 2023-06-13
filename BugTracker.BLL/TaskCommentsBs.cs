@@ -24,28 +24,28 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the task comment.</param>
         /// <returns>The task comment.</returns>
-        TaskComments GetById(int id);
+        TaskComments GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task comment.
         /// </summary>
         /// <param name="obj">The task comment object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(TaskComments obj);
+        TaskComments Insert(TaskComments obj);
 
         /// <summary>
         /// Updates an existing task comment.
         /// </summary>
         /// <param name="obj">The task comment object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(TaskComments obj);
+        TaskComments Update(TaskComments obj);
 
         /// <summary>
         /// Deletes a task comment by ID.
         /// </summary>
         /// <param name="id">The ID of the task comment to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
@@ -70,25 +70,25 @@ namespace BugTracker.BLL
             return objDb.GetAll();
         }
 
-        public TaskComments GetById(int id)
+        public TaskComments GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
        
-        public bool Insert(TaskComments obj)
+        public TaskComments Insert(TaskComments obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(TaskComments obj)
+        public TaskComments Update(TaskComments obj)
         {
             return objDb.Update(obj);
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }

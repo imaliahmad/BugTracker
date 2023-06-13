@@ -22,6 +22,7 @@ builder.Services.AddTransient<IProjectsDb, ProjectsDb>();
 builder.Services.AddTransient<IProjectUserDb, ProjectUserDb>();
 builder.Services.AddTransient<ITasksDb, TasksDb>();
 builder.Services.AddTransient<ITaskHistoryDb, TaskHistoryDb>();
+builder.Services.AddTransient<ITaskCommentsDb, TaskCommentsDb>();
 
 #endregion
 
@@ -32,6 +33,8 @@ builder.Services.AddTransient<IProjectsBs, ProjectsBs>();
 builder.Services.AddTransient<IProjectUserBs, ProjectUserBs>();
 builder.Services.AddTransient<ITasksBs, TasksBs>();
 builder.Services.AddTransient<ITaskHistoryBs, TaskHistoryBs>();
+builder.Services.AddTransient<ITaskCommentsBs, TaskCommentsBs>();
+
 #endregion
 
 
