@@ -11,7 +11,7 @@ namespace BugTracker.DAL
     /// <summary>
     /// Represents the database operations for task history details.
     /// </summary>
-    public interface ITaskDetailDb
+    public interface ITaskHistoryDb
     {
         /// <summary>
         /// Gets all the task history details.
@@ -24,34 +24,34 @@ namespace BugTracker.DAL
         /// </summary>
         /// <param name="id">The ID of the task history detail.</param>
         /// <returns>The task history detail.</returns>
-        TaskHistory GetById(int id);
+        TaskHistory GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task history detail.
         /// </summary>
         /// <param name="obj">The task history detail object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(TaskHistory obj);
+        TaskHistory Insert(TaskHistory obj);
 
         /// <summary>
         /// Updates an existing task history detail.
         /// </summary>
         /// <param name="obj">The task history detail object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(TaskHistory obj);
+        TaskHistory Update(TaskHistory obj);
 
         /// <summary>
         /// Deletes a task history detail by ID.
         /// </summary>
         /// <param name="id">The ID of the task history detail to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
     /// Represents the implementation of the task history details database operations.
     /// </summary>
-    public class TaskHistoryDb : ITaskDetailDb
+    public class TaskHistoryDb : ITaskHistoryDb
     {
         private AppDbContext context;
 
@@ -71,30 +71,30 @@ namespace BugTracker.DAL
         }
 
         
-        public TaskHistory GetById(int id)
+        public TaskHistory GetById(Guid id)
         {
             var obj = context.TaskHistory.Find(id);
             return obj;
         }
 
         
-        public bool Insert(TaskHistory obj)
+        public TaskHistory Insert(TaskHistory obj)
         {
             context.TaskHistory.Add(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
         
-        public bool Update(TaskHistory obj)
+        public TaskHistory Update(TaskHistory obj)
         {
             context.TaskHistory.Update(obj);
             context.SaveChanges();
-            return true;
+            return obj;
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             var obj = context.TaskHistory.Find(id);
             context.TaskHistory.Remove(obj);

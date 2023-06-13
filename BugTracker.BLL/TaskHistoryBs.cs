@@ -11,7 +11,7 @@ namespace BugTracker.BLL
     /// <summary>
     /// Represents the business logic operations for task details.
     /// </summary>
-    public interface ITaskDetailBs
+    public interface ITaskHistoryBs
     {
         /// <summary>
         /// Gets all task histories.
@@ -24,42 +24,42 @@ namespace BugTracker.BLL
         /// </summary>
         /// <param name="id">The ID of the task history.</param>
         /// <returns>The task history.</returns>
-        TaskHistory GetById(int id);
+        TaskHistory GetById(Guid id);
 
         /// <summary>
         /// Inserts a new task history.
         /// </summary>
         /// <param name="obj">The task history object to insert.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Insert(TaskHistory obj);
+        TaskHistory Insert(TaskHistory obj);
 
         /// <summary>
         /// Updates an existing task history.
         /// </summary>
         /// <param name="obj">The task history object to update.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Update(TaskHistory obj);
+        TaskHistory Update(TaskHistory obj);
 
         /// <summary>
         /// Deletes a task history by ID.
         /// </summary>
         /// <param name="id">The ID of the task history to delete.</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(Guid id);
     }
 
     /// <summary>
     /// Represents the implementation of the task details business logic operations.
     /// </summary>
-    public class TaskHistoryBs : ITaskDetailBs
+    public class TaskHistoryBs : ITaskHistoryBs
     {
-        private readonly ITaskDetailDb objDb;
+        private readonly ITaskHistoryDb objDb;
 
         /// <summary>
         /// Initializes a new instance of the TaskDetailBs class with the specified task details database.
         /// </summary>
         /// <param name="_objDb">The task details database implementation.</param>
-        public TaskHistoryBs(ITaskDetailDb _objDb)
+        public TaskHistoryBs(ITaskHistoryDb _objDb)
         {
             objDb = _objDb;
         }
@@ -71,25 +71,25 @@ namespace BugTracker.BLL
         }
 
         
-        public TaskHistory GetById(int id)
+        public TaskHistory GetById(Guid id)
         {
             return objDb.GetById(id);
         }
 
         
-        public bool Insert(TaskHistory obj)
+        public TaskHistory Insert(TaskHistory obj)
         {
             return objDb.Insert(obj);
         }
 
         
-        public bool Update(TaskHistory obj)
+        public TaskHistory Update(TaskHistory obj)
         {
             return objDb.Update(obj);
         }
 
        
-        public bool Delete(int id)
+        public bool Delete(Guid id)
         {
             return objDb.Delete(id);
         }
