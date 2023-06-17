@@ -1,6 +1,8 @@
 ﻿using BugTracker.API.DTOs.Request;
+using BugTracker.API.DTOs.Response;
 using BugTracker.BLL;
 using BugTracker.BOL;
+using BugTracker.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,7 +42,7 @@ namespace BugTracker.API.Controllers
                     orgDTOList.Add(OrganizationsDTO.ToOrganizationsDTO(item));
                 }
 
-                return Ok(orgDTOList.ToArray());
+                return Ok(new JsonResponse() {IsSuccess = true,Data = orgDTOList.ToArray()});
             }
             catch (Exception ex)
             {
@@ -62,7 +64,7 @@ namespace BugTracker.API.Controllers
                 var org = organizationsBs.GetById(id);
                 OrganizationsDTO organizationsDTO = OrganizationsDTO.ToOrganizationsDTO(org);
 
-                return Ok(organizationsDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = organizationsDTO });
             }
             catch (Exception ex)
             {
@@ -85,7 +87,7 @@ namespace BugTracker.API.Controllers
                                                    OrganizationsDTO.ToOrganizationsModel(orgDTO));
 
                 orgDTO = OrganizationsDTO.ToOrganizationsDTO(organizations);
-                return Ok(orgDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = orgDTO });
             }
             catch (Exception ex)
             {
@@ -107,7 +109,8 @@ namespace BugTracker.API.Controllers
                 Organizations organizations = organizationsBs.Update(OrganizationsDTO.ToOrganizationsModel(orgDto));
 
                 orgDto = OrganizationsDTO.ToOrganizationsDTO(organizations);
-                return Ok(orgDto);
+
+                return Ok(new JsonResponse() { IsSuccess = true, Data = orgDto });
             }
             catch (Exception ex)
             {
