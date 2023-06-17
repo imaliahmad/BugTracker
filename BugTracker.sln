@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.DAL", "BugTracke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.BLL", "BugTracker.BLL\BugTracker.BLL.csproj", "{78E1A30E-BE1E-4D95-8CAF-DC5A9BDA5AB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTracker.API", "BugTracker.API\BugTracker.API.csproj", "{7871EFC6-08DB-44F2-8243-C5575A216B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.API", "BugTracker.API\BugTracker.API.csproj", "{7871EFC6-08DB-44F2-8243-C5575A216B55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTracker.Web", "BugTracker.Web\BugTracker.Web.csproj", "{63D2D822-C5C3-4C14-A556-056D6FB525EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7871EFC6-08DB-44F2-8243-C5575A216B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7871EFC6-08DB-44F2-8243-C5575A216B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7871EFC6-08DB-44F2-8243-C5575A216B55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D2D822-C5C3-4C14-A556-056D6FB525EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D2D822-C5C3-4C14-A556-056D6FB525EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D2D822-C5C3-4C14-A556-056D6FB525EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D2D822-C5C3-4C14-A556-056D6FB525EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
