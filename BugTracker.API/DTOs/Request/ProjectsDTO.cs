@@ -57,6 +57,8 @@ namespace BugTracker.API.DTOs.Request
             project.StartDate = projectsDTO.StartDate;
             project.EndDate = projectsDTO.EndDate;
 
+            project.Organizations = projectsDTO.Organizations;
+
             return project;
         }
 
@@ -73,6 +75,8 @@ namespace BugTracker.API.DTOs.Request
             projectDTO.OrgId = model.OrgId;
             projectDTO.StartDate = model.StartDate;
             projectDTO.EndDate = model.EndDate;
+
+            projectDTO.Organizations = model.Organizations;
 
             return projectDTO;
         }

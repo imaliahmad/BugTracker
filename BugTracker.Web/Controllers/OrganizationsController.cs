@@ -1,5 +1,6 @@
 ﻿using BugTracker.BOL;
 using BugTracker.Web.Models;
+using BugTracker.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -19,17 +20,52 @@ namespace BugTracker.Web.Controllers
         /// <returns>List of organizations.</returns>
         public async Task<IActionResult> Index()
         {
-            var list = await GetOrganizations();
-            return View(list);
+            try
+            {
+                var list = await GetOrganizations();
+                var viewModelList = new List<OrganizationsVM>();
+                foreach (var org in list)
+                {
+                    var viewModel = new OrganizationsVM
+                    {
+                        Id = org.Id,
+                        Name = org.Name,
+                        Email = org.Email,
+                        ContactNo = org.ContactNo,
+                        
+                    };
+
+                    viewModelList.Add(viewModel);
+                }
+
+                return View(viewModelList);
+                
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+
+            }
         }
 
         /// <summary>
         /// Displays the create organization form.
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateNew()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+            }
         }
 
         /// <summary>
@@ -37,10 +73,20 @@ namespace BugTracker.Web.Controllers
         /// </summary>
         /// <param name="model">The organization model to create.</param>
         [HttpPost]
-        public async Task<IActionResult> Create(Organizations model)
+        public async Task<IActionResult> CreateNew(Organizations model)
         {
-            var obj = await Insert(model);
-            return RedirectToAction("Index");
+            try
+            {
+                var obj = await Insert(model);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+
+            }
         }
 
         /// <summary>
@@ -50,8 +96,24 @@ namespace BugTracker.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var organization = await GetById(id);
-            return View(organization);
+            try
+            {
+                var organization = await GetById(id);
+
+                OrganizationsVM organizations = new OrganizationsVM();
+                organizations.Id = organization.Id; 
+                organizations.Name = organization.Name;
+                organizations.Email =organizations.Email;
+                organizations.ContactNo = organization.ContactNo;
+
+                return View(organizations);
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+            }
         }
 
         /// <summary>
@@ -61,8 +123,17 @@ namespace BugTracker.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Organizations model)
         {
-            var obj = await Update(model);
-            return RedirectToAction("Index");
+            try
+            {
+                var obj = await Update(model);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+            }
         }
 
         /// <summary>
@@ -72,8 +143,24 @@ namespace BugTracker.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var organization = await GetById(id);
-            return View(organization);
+            try
+            {
+                var organization = await GetById(id);
+
+                OrganizationsVM organizations = new OrganizationsVM();
+                organizations.Id = organization.Id;
+                organizations.Name = organization.Name;
+                organizations.Email = organizations.Email;
+                organizations.ContactNo = organization.ContactNo;
+
+                return View(organizations);
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                TempData["ErrorMessage"] = msg;
+                return View();
+            }
         }
 
         /// <summary>
@@ -118,6 +205,16 @@ namespace BugTracker.Web.Controllers
                     string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
 
                     var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                    if (jsonResponse.IsSuccess)
+                    {
+                        TempData["SuccessMsg"] = "Organization is created";
+                    }
+                    else
+                    {
+                        TempData["ErrorMsg"] = "Organization is not  created";
+                    }
+
                 }
             }
 
@@ -142,6 +239,15 @@ namespace BugTracker.Web.Controllers
                     string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
 
                     var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                    if (jsonResponse.IsSuccess)
+                    {
+                        TempData["SuccessMsg"] = "Organization is update";
+                    }
+                    else
+                    {
+                        TempData["ErrorMsg"] = "Organization is not  update";
+                    }
                 }
             }
 

@@ -48,7 +48,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Initializes a new instance of the Projects class.
         /// </summary>
-        public Projects()
+        public Projects():base()
         {
 
         }

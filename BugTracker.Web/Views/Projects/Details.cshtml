@@ -1,0 +1,45 @@
+﻿
+@model BugTracker.Web.ViewModels.ProjectsVM;
+
+@{
+    ViewData["Title"] = "CreateNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<h4>Projects</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateNew" asp-controller="Projects">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" disabled class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+             <div>
+              <label asp-for="OrgId" class="control-label"></label>
+              <select asp-for="OrgId" disabled class="form-control" asp-items="ViewBag.OrganizationList">
+                 <option> ---  Select --- </option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" disabled class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate"disabled class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
