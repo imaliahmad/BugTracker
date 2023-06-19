@@ -1,8 +1,11 @@
 ﻿using BugTracker.API.DTOs.Request;
+using BugTracker.API.DTOs.Response;
 using BugTracker.BLL;
 using BugTracker.BOL;
+using BugTracker.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BugTracker.API.Controllers
 {
@@ -11,10 +14,11 @@ namespace BugTracker.API.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectsBs projectsBs;
-
-        public ProjectsController(IProjectsBs _projectsBs)
+        private readonly IOrganizationsBs organizationsBs;
+        public ProjectsController(IProjectsBs _projectsBs, IOrganizationsBs _organizationsBs)
         {
             projectsBs = _projectsBs;
+            organizationsBs = _organizationsBs;
         }
 
         /// <summary>
@@ -34,12 +38,13 @@ namespace BugTracker.API.Controllers
                     projectsDTOList.Add(ProjectsDTO.ToProjectsDTO(item));
                 }
 
-                return Ok(projectsDTOList.ToArray());
+                return Ok(new JsonResponse() { IsSuccess = true, Data = projectsDTOList.ToArray() });
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -54,14 +59,15 @@ namespace BugTracker.API.Controllers
         {
             try
             {
-                var users = projectsBs.GetById(id);
-                ProjectsDTO usersDTO = ProjectsDTO.ToProjectsDTO(users);
+                var projects = projectsBs.GetById(id);
+                ProjectsDTO projectsDTO = ProjectsDTO.ToProjectsDTO(projects);
 
-                return Ok(usersDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = projectsDTO });
             }
             catch (Exception ex)
             {
-                return NotFound();
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
 
             }
         }
@@ -83,19 +89,20 @@ namespace BugTracker.API.Controllers
                                     );
 
                 projectsDTO = ProjectsDTO.ToProjectsDTO(Projects);
-
-                return Ok(projectsDTO);
+          
+                return Ok(new JsonResponse() { IsSuccess = true, Data = projectsDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg});
             }
         }
 
         /// <summary>
         /// Updates an existing project.
         /// </summary>
-        /// <param name="orgDto">The project data to update.</param>
+        /// <param name="projectDto">The project data to update.</param>
         /// <returns>The updated project.</returns>
         [HttpPut]
         [Route("update")]
@@ -109,11 +116,12 @@ namespace BugTracker.API.Controllers
 
                 projectsDTO = ProjectsDTO.ToProjectsDTO(Projects);
 
-                return Ok(projectsDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = projectsDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -128,12 +136,13 @@ namespace BugTracker.API.Controllers
         {
             try
             {
-                var users = projectsBs.Delete(id);
-                return Ok(users);
+                var projects = projectsBs.Delete(id);
+                return Ok(projects);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
     }

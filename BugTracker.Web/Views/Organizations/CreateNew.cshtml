@@ -1,17 +1,21 @@
-﻿@model BugTracker.BOL.Organizations
+﻿
+@model BugTracker.Web.ViewModels.OrganizationsVM
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@if (TempData["ErrorMessage"] != null)
+{
+  <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 <h1>Create</h1>
 
 <h4>Organizations</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Organizations" method="post">
+        <form asp-action="CreateNew" asp-controller="Organizations" method="post">
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -38,4 +42,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
 

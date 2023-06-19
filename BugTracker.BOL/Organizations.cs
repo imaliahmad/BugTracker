@@ -37,7 +37,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Initializes a new instance of the Organizations class.
         /// </summary>
-        public Organizations()
+        public Organizations():base()
         {
 
         }
