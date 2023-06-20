@@ -59,6 +59,9 @@ namespace BugTracker.API.DTOs.Request
             user.ProjectId = userDTO.ProjectId;
             user.UserId = userDTO.UserId;
 
+            user.Projects = userDTO.Projects;
+            user.AppUsers = userDTO.AppUsers;
+
             return user;
         }
 
@@ -73,7 +76,9 @@ namespace BugTracker.API.DTOs.Request
             userDTO.Id = model.Id;
             userDTO.ProjectId = model.ProjectId;
             userDTO.UserId = model.UserId;
-
+            
+            userDTO.Projects = model.Projects;
+            userDTO.AppUsers = model.AppUsers;
             return userDTO;
         }
     }

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BugTracker.Web.ViewModels.ProjectUserVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Project Users</h1>
+<p>
+    <a href="/ProjectUser/CreateNew">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+               Project
+            </th>
+            <th>
+               User
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null)
+        {
+            @foreach (var item in Model)
+            {
+
+              <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Projects.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppUsers.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="color" asp-route-id="@item.Id">Edit |</a>
+                    <a asp-action="Details" class="color"asp-route-id="@item.Id">Details</a>
+                </td>
+              </tr>
+            } 
+
+        }
+           
+       
+        
+    </tbody>
+</table>
