@@ -1,4 +1,5 @@
 ﻿using BugTracker.API.DTOs.Request;
+using BugTracker.API.DTOs.Response;
 using BugTracker.BLL;
 using BugTracker.BOL;
 using BugTracker.DAL;
@@ -38,7 +39,7 @@ namespace BugTracker.API.Controllers
                     usersDTOList.Add(AppUsersDTO.ToAppUsersDTO(item));
                 }
 
-                return Ok(usersDTOList.ToArray());
+                return Ok(new JsonResponse() { IsSuccess = true, Data = usersDTOList.ToArray() });
             }
             catch (Exception ex)
             {

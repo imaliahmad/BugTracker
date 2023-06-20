@@ -1,6 +1,8 @@
 ﻿using BugTracker.API.DTOs.Request;
+using BugTracker.API.DTOs.Response;
 using BugTracker.BLL;
 using BugTracker.BOL;
+using BugTracker.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +36,7 @@ namespace BugTracker.API.Controllers
                     usersDTOList.Add(ProjectUsersDTO.ToProjectUsersDTO(item));
                 }
 
-                return Ok(usersDTOList.ToArray());
+                return Ok(new JsonResponse() { IsSuccess = true, Data = usersDTOList.ToArray() });
             }
             catch (Exception ex)
             {
@@ -57,11 +59,12 @@ namespace BugTracker.API.Controllers
                 var users = ProjectUserBs.GetById(id);
                 ProjectUsersDTO usersDTO = ProjectUsersDTO.ToProjectUsersDTO(users);
 
-                return Ok(usersDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = usersDTO });
             }
             catch (Exception ex)
             {
-                return NotFound();
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
 
             }
         }
@@ -69,7 +72,7 @@ namespace BugTracker.API.Controllers
         /// <summary>
         /// Creates a new projectuser.
         /// </summary>
-        /// <param name="orgDTO">The projectuser data.</param>
+        /// <param name="projectuserDTO">The projectuser data.</param>
         /// <returns>The created projectuser.</returns>
 
         [HttpPost]
@@ -84,11 +87,12 @@ namespace BugTracker.API.Controllers
 
                 usersDTO = ProjectUsersDTO.ToProjectUsersDTO(ProjectUser);
 
-                return Ok(usersDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = usersDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -109,11 +113,12 @@ namespace BugTracker.API.Controllers
 
                 usersDTO = ProjectUsersDTO.ToProjectUsersDTO(ProjectUser);
 
-                return Ok(usersDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = usersDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -134,7 +139,8 @@ namespace BugTracker.API.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound();
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
     }
