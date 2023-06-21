@@ -1,6 +1,8 @@
 ﻿using BugTracker.API.DTOs.Request;
+using BugTracker.API.DTOs.Response;
 using BugTracker.BLL;
 using BugTracker.BOL;
+using BugTracker.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,12 +36,12 @@ namespace BugTracker.API.Controllers
                     TasksDTOList.Add(TasksDTO.ToTasksDTO(item));
                 }
 
-                return Ok(TasksDTOList.ToArray());
+                return Ok(new JsonResponse() { IsSuccess = true, Data = TasksDTOList.ToArray() });
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -57,11 +59,12 @@ namespace BugTracker.API.Controllers
                 var tasks = TasksBs.GetById(id);
                 TasksDTO tasksDTO = TasksDTO.ToTasksDTO(tasks);
 
-                return Ok(tasksDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = tasksDTO });
             }
             catch (Exception ex)
             {
-                return NotFound();
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
 
             }
         }
@@ -84,11 +87,12 @@ namespace BugTracker.API.Controllers
 
                 TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 
-                return Ok(TasksDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = TasksDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -109,11 +113,12 @@ namespace BugTracker.API.Controllers
 
                 TasksDTO = TasksDTO.ToTasksDTO(Tasks);
 
-                return Ok(TasksDTO);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = TasksDTO });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
 
@@ -129,11 +134,12 @@ namespace BugTracker.API.Controllers
             try
             {
                 var users = TasksBs.Delete(id);
-                return Ok(users);
+                return Ok(new JsonResponse() { IsSuccess = true, Data = users });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(new JsonResponse() { IsSuccess = false, Message = msg });
             }
         }
     }
