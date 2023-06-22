@@ -45,7 +45,7 @@ namespace BugTracker.API.DTOs.Request
         /// <summary>
         /// Gets or sets the task number.
         /// </summary>
-        public string TaskNo { get; set; }
+        public string? TaskNo { get; set; }
 
         // Navigations
 

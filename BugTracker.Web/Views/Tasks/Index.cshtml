@@ -18,52 +18,58 @@
                   @Html.DisplayNameFor(model => model.TaskNo)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    Task
+                </th>
+                <th>
+                  @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(model => model.Priority)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(model => model.Type)
                 </th>
                 <th>
                    Project
                 </th>
-                <th>
-                   @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                   @Html.DisplayNameFor(model => model.Priority)
-                </th>
-                <th>
-                   @Html.DisplayNameFor(model => model.Type)
-                </th>
-                
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Projects.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Priority)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" class="color" asp-route-id="@item.Id">Edit |</a>
-                        <a asp-action="Details" class="color" asp-route-id="@item.Id">Details</a>
-                    </td>
-                </tr>
-            }
+              @if(Model != null)
+              {
+                @foreach (var item in Model)
+                {
+                      <tr>
+                            <td>
+                               @Html.DisplayFor(modelItem => item.TaskNo)
+                            </td>
+                            <td>
+                               @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                               @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                               @Html.DisplayFor(modelItem => item.Priority)
+                            </td>
+                            <td>
+                               @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Projects.Name)
+                            </td>
+                           
+                            <td>
+                                <a asp-action="Edit" class="color" asp-route-id="@item.Id">Edit |</a>
+                                <a asp-action="Details" class="color" asp-route-id="@item.Id">Details</a>
+                            </td>
+                      </tr>
+                }
+
+              }
+            
+           
         </tbody>
     </table>
 

@@ -24,21 +24,9 @@
                 <span asp-validation-for="TaskNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Task</label>
                 <input asp-for="Name" disabled class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-              <label asp-for="ProjectId" class="control-label">Project</label>
-              <select asp-for="ProjectId" disabled class="form-control" asp-items="ViewBag.ProjectsList">
-                 <option> ---  Select --- </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label asp-for="CreatedUserId" class="control-label">CreatedUser</label>
-              <select asp-for="CreatedUserId" disabled class="form-control" asp-items="ViewBag.ProjectUserList">
-                 <option> ---  Select --- </option>
-              </select>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -58,6 +46,18 @@
               </select>
             </div>
 
+            <div class="form-group">
+              <label asp-for="ProjectId" class="control-label">Project</label>
+              <select asp-for="ProjectId" disabled class="form-control" asp-items="ViewBag.ProjectsList">
+                 <option> ---  Select --- </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label asp-for="CreatedUserId" class="control-label">CreatedUser</label>
+              <select asp-for="CreatedUserId" disabled class="form-control" asp-items="ViewBag.ProjectUserList">
+                 <option> ---  Select --- </option>
+              </select>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" />
             </div>

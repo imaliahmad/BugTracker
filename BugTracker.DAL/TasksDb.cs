@@ -70,7 +70,7 @@ namespace BugTracker.DAL
         {
             var list = context.Tasks
                                        .Include(p => p.Projects)
-                                       .Include(u => u.ProjectUser)
+                                       .Include(u => u.ProjectUser.AppUsers)
                                        .Select(x => new Tasks()
                                        {
                                            Id = x.Id,
@@ -78,14 +78,17 @@ namespace BugTracker.DAL
                                            ProjectId = x.ProjectId,
                                            Projects = x.Projects,
                                            CreatedUserId = x.CreatedUserId,
-                                           ProjectUser = x.ProjectUser,
+                                           ProjectUser = new ProjectUser()
+                                           { 
+                                              Id = x.ProjectUser.Id,
+                                              ProjectId = x.ProjectUser.ProjectId,
+                                              UserId = x.ProjectUser.UserId,
+                                              AppUsers = x.ProjectUser.AppUsers                                            
+                                           },
                                            Description = x.Description,
                                            Priority = x.Priority,
                                            Type  = x.Type,
-                                           TaskNo = x.TaskNo,
-
-
-
+                                           TaskNo = x.TaskNo
                                        }).ToList();
             return list;
         }
