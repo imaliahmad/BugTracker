@@ -52,7 +52,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Initializes a new instance of the ProjectUser class.
         /// </summary>
-        public ProjectUser()
+        public ProjectUser():base()
         {
 
         }

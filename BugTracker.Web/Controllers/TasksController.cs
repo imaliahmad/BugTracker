@@ -20,7 +20,8 @@ namespace BugTracker.Web.Controllers
         public async Task<IActionResult> Index()
         {
             try
-            {
+            { 
+                //logical ==> debugging 
                 var list = await GetTasks();
                 var viewModelList = new List<TasksVM>();
                 foreach (var task in list)

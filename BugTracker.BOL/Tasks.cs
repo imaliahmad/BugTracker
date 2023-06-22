@@ -81,7 +81,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Initializes a new instance of the Tasks class.
         /// </summary>
-        public Tasks()
+        public Tasks():base()
         {
 
         }
