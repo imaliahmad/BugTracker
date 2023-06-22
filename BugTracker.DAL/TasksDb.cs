@@ -1,5 +1,6 @@
 ﻿using BugTracker.BOL;
 using BugTracker.DAL.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,26 @@ namespace BugTracker.DAL
        
         public IEnumerable<Tasks> GetAll()
         {
-            return context.Tasks.ToList();
+            var list = context.Tasks
+                                       .Include(p => p.Projects)
+                                       .Include(u => u.ProjectUser)
+                                       .Select(x => new Tasks()
+                                       {
+                                           Id = x.Id,
+                                           Name = x.Name,
+                                           ProjectId = x.ProjectId,
+                                           Projects = x.Projects,
+                                           CreatedUserId = x.CreatedUserId,
+                                           ProjectUser = x.ProjectUser,
+                                           Description = x.Description,
+                                           Priority = x.Priority,
+                                           Type  = x.Type,
+                                           TaskNo = x.TaskNo,
+
+
+
+                                       }).ToList();
+            return list;
         }
 
        
@@ -80,6 +100,7 @@ namespace BugTracker.DAL
        
         public Tasks Insert(Tasks obj)
         {
+            obj.TaskNo = GetUniqueTaskNumber();
             context.Tasks.Add(obj);
             context.SaveChanges();
             return obj;
@@ -100,6 +121,31 @@ namespace BugTracker.DAL
             context.Tasks.Remove(obj);
             context.SaveChanges();
             return true;
+        }
+        public string GetUniqueTaskNumber()
+        {
+            string task = "TK";
+            string currentDate = DateTime.Now.ToString("ddMMyy");
+
+            string latestTaskNumber = context.Tasks
+                                                    .Where(a => a.TaskNo.StartsWith(task + "-" + currentDate))
+                                                    .OrderByDescending(a => a.TaskNo)
+                                                    .Select(a => a.TaskNo)
+                                                    .FirstOrDefault();
+
+            // D4 = 0000
+
+            int sequenceNumber = 1;
+            if (!string.IsNullOrEmpty(latestTaskNumber))
+            {
+                string sequencePart = latestTaskNumber.Substring(10, 4); // 0005 
+                sequenceNumber = Convert.ToInt32(sequencePart) + 1; //6
+            }
+            // string.format("", D4)
+
+            string newTaskNumber = $"{task}-{currentDate}-{sequenceNumber:D4}";
+            return newTaskNumber;
+
         }
     }
 }

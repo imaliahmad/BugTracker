@@ -1,7 +1,6 @@
 ﻿using BugTracker.API.DTOs.Response;
-using BugTracker.BLL;
 using BugTracker.BOL;
-using BugTracker.DAL;
+using BugTracker.BOL.DataTypes;
 using BugTracker.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,70 +9,54 @@ using System.Text;
 
 namespace BugTracker.Web.Controllers
 {
-   
-
-    public class ProjectsController : Controller
+    public class TasksController : Controller
     {
-        private readonly IOrganizationsBs organizationsBs;
-        public ProjectsController(IOrganizationsBs _organizationsBs)
-        {
-            organizationsBs = _organizationsBs;
-        }
-
         string baseApiURL = "http://localhost:5020/api";
 
         /// <summary>
-        /// Retrieves the list of Projects.
+        /// Retrieves the list of Tasks.
         /// </summary>
-        /// <returns>List of Projects.</returns>
+        /// <returns>List of Tasks.</returns>
         public async Task<IActionResult> Index()
         {
             try
             {
-                var list = await GetProjects();
-                var viewModelList = new List<ProjectsVM>();
-                foreach (var project in list)
+                var list = await GetTasks();
+                var viewModelList = new List<TasksVM>();
+                foreach (var task in list)
                 {
-                    //mapping in view model
-                    var viewModel = new ProjectsVM
-                    {
-                        Id = project.Id,
-                        Name = project.Name,
-                        OrgId = project.OrgId,                        
-                        StartDate = project.StartDate,
-                        EndDate = project.EndDate,
-                        Organizations = new OrganizationsVM() { 
-                            Id = project.Organizations.Id,
-                            Name = project.Organizations.Name,
-                            Email = project.Organizations.Email,
-                            ContactNo = project.Organizations.ContactNo
-                        }
-
-                    };
-
-                    viewModelList.Add(viewModel);
+                    viewModelList.Add(TasksVM.ToTasksVM(task));
                 }
 
                 return View(viewModelList);
+
             }
             catch (Exception ex)
             {
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
+
             }
         }
-        /// <summary>
-        /// Displays the create Project form.
-        /// </summary>
 
+        /// <summary>
+        /// Displays the create Task form.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> CreateNew()
         {
             try
             {
-                var list = await GetOrganizations();
-                ViewBag.OrganizationList = new SelectList(list, "Id", "Name");
+                var list = await GetProjects();
+                ViewBag.ProjectsList = new SelectList(list, "Id", "Name");
+
+                var user = await GetProjectUser();
+                ViewBag.ProjectUserList = new SelectList(user, "Id", "AppUsers.Name");
+
+                ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(PriorityTypes)));
+                ViewBag.TypeList = new SelectList(Enum.GetValues(typeof(TaskTypes)));
+
                 return View();
             }
             catch (Exception ex)
@@ -81,21 +64,19 @@ namespace BugTracker.Web.Controllers
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
-
             }
-            
         }
 
-        ///// <summary>
-        ///// Handles the submission of the create Project form.
-        ///// </summary>
-        ///// <param name="model">The Project model to create.</param>
+        /// <summary>
+        /// Handles the submission of the create Task form.
+        /// </summary>
+        /// <param name="model">The Task model to create.</param>
         [HttpPost]
-        public async Task<IActionResult> CreateNew(Projects model)
+        public async Task<IActionResult> CreateNew(Tasks model)
         {
             try
             {
-                var response = await Insert(model);
+                var obj = await Insert(model);
 
                 return RedirectToAction("Index");
             }
@@ -104,51 +85,50 @@ namespace BugTracker.Web.Controllers
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
+
             }
-            
         }
 
-      
         /// <summary>
-        /// Displays the edit Project form.
+        /// Displays the edit Task form.
         /// </summary>
-        /// <param name="id">The ID of the Project to edit.</param>
+        /// <param name="id">The ID of the Task to edit.</param>
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
             try
             {
-                var project = await GetById(id);
+                var Task = await GetById(id);
 
-                ProjectsVM projects = new ProjectsVM();
-                projects.Id = project.Id;
-                projects.Name = project.Name;
-                projects.OrgId = project.OrgId;
-                projects.StartDate = project.StartDate;
-                projects.EndDate = project.EndDate;
+                TasksVM tasksVM = new TasksVM();
+                tasksVM = TasksVM.ToTasksVM(Task);
 
-                var list = await GetOrganizations();
-                ViewBag.OrganizationList = new SelectList(list, "Id", "Name");
+                var list = await GetProjects();
+                ViewBag.ProjectsList = new SelectList(list, "Id", "Name");
 
-                return View(projects);
+                var user = await GetProjectUser();
+                ViewBag.ProjectUserList = new SelectList(user, "Id", "AppUsers.Name");
+
+                ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(PriorityTypes)));
+                ViewBag.TypeList = new SelectList(Enum.GetValues(typeof(TaskTypes)));
+
+                return View(tasksVM);
+
             }
             catch (Exception ex)
             {
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
-
             }
-
-            
         }
 
         /// <summary>
-        /// Handles the submission of the edit Project form.
+        /// Handles the submission of the edit Task form.
         /// </summary>
-        /// <param name="model">The updated Project model.</param>
+        /// <param name="model">The updated Task model.</param>
         [HttpPost]
-        public async Task<IActionResult> Edit(Projects model)
+        public async Task<IActionResult> Edit(Tasks model)
         {
             try
             {
@@ -160,42 +140,158 @@ namespace BugTracker.Web.Controllers
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
-
             }
-
         }
 
         /// <summary>
-        /// Displays the details of an Project.
+        /// Displays the details of an Task.
         /// </summary>
-        /// <param name="id">The ID of the Project.</param>
+        /// <param name="id">The ID of the Task.</param>
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             try
             {
-                var project = await GetById(id);
+                var Task = await GetById(id);
 
-                ProjectsVM projects = new ProjectsVM();
+                TasksVM tasksVM = new TasksVM();
+                tasksVM = TasksVM.ToTasksVM(Task);
 
-                projects.Id = project.Id;
-                projects.Name = project.Name;
-                projects.OrgId = project.OrgId;
-                projects.StartDate = project.StartDate;
-                projects.EndDate = project.EndDate;
+                var list = await GetProjects();
+                ViewBag.ProjectsList = new SelectList(list, "Id", "Name");
 
-                var list = await GetOrganizations();
-                ViewBag.OrganizationList = new SelectList(list, "Id", "Name");
-                return View(projects);
+                var user = await GetProjectUser();
+                ViewBag.ProjectUserList = new SelectList(user, "Id", "AppUsers.Name");
+
+                ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(PriorityTypes)));
+                ViewBag.TypeList = new SelectList(Enum.GetValues(typeof(TaskTypes)));
+
+                return View(tasksVM);
             }
             catch (Exception ex)
             {
                 var msg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 TempData["ErrorMessage"] = msg;
                 return View();
-
             }
-           
+        }
+
+        /// <summary>
+        /// Retrieves the list of Tasks from the API.
+        /// </summary>
+        /// <returns>List of Tasks.</returns>
+        public async Task<List<Tasks>> GetTasks()
+        {
+            List<Tasks> list = new List<Tasks>();
+            string endpoint = $"{baseApiURL}/Tasks/getAll";
+            using (HttpClient client = new HttpClient())
+            {
+                using var response = await client.GetAsync(endpoint);
+                string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
+
+                var result = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                if (result.IsSuccess)
+                {
+                    list = JsonConvert.DeserializeObject<List<Tasks>>(result.Data.ToString());
+                }
+
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// Inserts a new Task into the API.
+        /// </summary>
+        /// <param name="model">The Task model to insert.</param>
+        public async Task<IActionResult> Insert(Tasks model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = $"{baseApiURL}/Tasks/create";
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model),
+                                                             Encoding.UTF8, "application/json");
+
+                using var response = await client.PostAsync(endpoint, content);
+                {
+                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
+
+                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                    if (jsonResponse.IsSuccess)
+                    {
+                        TempData["SuccessMsg"] = "Task is created";
+                    }
+                    else
+                    {
+                        TempData["ErrorMsg"] = "Task is not  created";
+                    }
+
+                }
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// Updates an existing Task in the API.
+        /// </summary>
+        /// <param name="model">The updated Task model.</param>
+        public async Task<IActionResult> Update(Tasks model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = $"{baseApiURL}/Tasks/update";
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model),
+                                                             Encoding.UTF8, "application/json");
+
+                using var response = await client.PutAsync(endpoint, content);
+                {
+                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
+
+                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                    if (jsonResponse.IsSuccess)
+                    {
+                        TempData["SuccessMsg"] = "Task is update";
+                    }
+                    else
+                    {
+                        TempData["ErrorMsg"] = "Task is not  update";
+                    }
+                }
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// Retrieves an Task by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the Task.</param>
+        /// <returns>The Task.</returns>
+        public async Task<Tasks> GetById(Guid id)
+        {
+            var Tasks = new Tasks();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = $"{baseApiURL}/Tasks/getById/" + id;
+                using var response = await client.GetAsync(endpoint);
+                {
+                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
+
+                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
+
+                    if (jsonResponse.IsSuccess)
+                    {
+                        Tasks = JsonConvert.DeserializeObject<Tasks>(jsonResponse.Data.ToString());
+                    }
+
+                    return Tasks;
+                }
+            }
         }
 
         /// <summary>
@@ -213,112 +309,23 @@ namespace BugTracker.Web.Controllers
 
                 var result = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
 
-                if (response.IsSuccessStatusCode)
+                if (result.IsSuccess)
                 {
                     list = JsonConvert.DeserializeObject<List<Projects>>(result.Data.ToString());
                 }
-               
 
                 return list;
             }
         }
-
         /// <summary>
-        /// Inserts a new Project into the API.
+        /// Retrieves the list of ProjectUser from the API.
         /// </summary>
-        /// <param name="model">The Project model to insert.</param>
-        public async Task<IActionResult> Insert(Projects model)
+        /// <returns>List of ProjectUser.</returns>
+        public async Task<List<ProjectUser>> GetProjectUser()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string endpoint = $"{baseApiURL}/Projects/create";
+            List<ProjectUser> list = new List<ProjectUser>();
+            string endpoint = $"{baseApiURL}/ProjectUser/getAll";
 
-                StringContent content = new StringContent(JsonConvert.SerializeObject(model),
-                                                             Encoding.UTF8, "application/json");
-
-                using var response = await client.PostAsync(endpoint, content);
-                {
-                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
-
-                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
-
-                    if (jsonResponse.IsSuccess) 
-                    {
-                        TempData["SuccessMsg"] = "Project is created";
-                    }
-                    else
-                    {
-                        TempData["ErrorMsg"] = "Project is not  created";
-                    }
-                }
-            }
-
-            return View();
-        }
-
-        /// <summary>
-        /// Updates an existing Project in the API.
-        /// </summary>
-        /// <param name="model">The updated Project model.</param>
-        public async Task<IActionResult> Update(Projects model)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string endpoint = $"{baseApiURL}/Projects/update";
-
-                StringContent content = new StringContent(JsonConvert.SerializeObject(model),
-                                                             Encoding.UTF8, "application/json");
-
-                using var response = await client.PutAsync(endpoint, content);
-                {
-                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
-
-                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
-                    if (jsonResponse.IsSuccess)
-                    {
-                        TempData["SuccessMsg"] = "Project is update";
-                    }
-                    else
-                    {
-                        TempData["ErrorMsg"] = "Project is not  update";
-                    }
-                }
-               
-            }
-
-            return View();
-        }
-
-        /// <summary>
-        /// Retrieves an Project by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the Project.</param>
-        /// <returns>The Project.</returns>
-        public async Task<Projects> GetById(Guid id)
-        {
-            var Projects = new Projects();
-            using (HttpClient client = new HttpClient())
-            {
-                string endpoint = $"{baseApiURL}/Projects/getById/" + id;
-                using var response = await client.GetAsync(endpoint);
-                {
-                    string resultStr = response.Content.ReadAsStringAsync().Result.ToString();
-
-                    var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(resultStr);
-
-                    if (jsonResponse.IsSuccess)
-                    {
-                        Projects = JsonConvert.DeserializeObject<Projects>(jsonResponse.Data.ToString());
-                    }
-
-                    return Projects;
-                }
-            }
-        }
-        public async Task<List<Organizations>> GetOrganizations()
-        {
-            List<Organizations> list = new List<Organizations>();
-            string endpoint = $"{baseApiURL}/Organizations/getAll";
             using (HttpClient client = new HttpClient())
             {
                 using var response = await client.GetAsync(endpoint);
@@ -328,7 +335,7 @@ namespace BugTracker.Web.Controllers
 
                 if (result.IsSuccess)
                 {
-                    list = JsonConvert.DeserializeObject<List<Organizations>>(result.Data.ToString());
+                    list = JsonConvert.DeserializeObject<List<ProjectUser>>(result.Data.ToString());
                 }
 
                 return list;

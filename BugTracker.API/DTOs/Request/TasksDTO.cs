@@ -94,6 +94,8 @@ namespace BugTracker.API.DTOs.Request
             task.Priority = tasksDto.Priority;
             task.Type = tasksDto.Type;
             task.TaskNo = tasksDto.TaskNo;
+            task.Projects = tasksDto.Projects;
+            task.ProjectUser = tasksDto.ProjectUser;
 
             return task;
 
@@ -114,6 +116,10 @@ namespace BugTracker.API.DTOs.Request
             taskDTO.CreatedUserId = model.CreatedUserId;
             taskDTO.Description = model.Description;
             taskDTO.TaskNo = model.TaskNo;
+            taskDTO.Priority = model.Priority;
+            taskDTO.Projects = model.Projects;
+            taskDTO.ProjectUser =model.ProjectUser;
+            taskDTO.Type = model.Type;
 
             return taskDTO;
         }
