@@ -59,6 +59,9 @@ namespace BugTracker.API.DTOs.Request
             taskHistory.ModifiedDate = taskHistoryDto.ModifiedDate;
             taskHistory.Status = taskHistoryDto.Status;
 
+            taskHistory.Tasks = taskHistoryDto.Tasks;
+            taskHistory.ProjectUser = taskHistoryDto.ProjectUser;
+
 
             return taskHistory;
 
@@ -78,6 +81,9 @@ namespace BugTracker.API.DTOs.Request
             taskHistoryDTO.AssigneeId = model.AssigneeId;
             taskHistoryDTO.ModifiedDate = model.ModifiedDate;
             taskHistoryDTO.Status = model.Status;
+
+            taskHistoryDTO.Tasks = model.Tasks;
+            taskHistoryDTO.ProjectUser = model.ProjectUser;
           
 
             return taskHistoryDTO;

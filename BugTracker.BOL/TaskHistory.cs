@@ -50,7 +50,7 @@ namespace BugTracker.BOL
         /// <summary>
         /// Initializes a new instance of the TaskHistory class.
         /// </summary>
-        public TaskHistory()
+        public TaskHistory():base()
         {
 
         }

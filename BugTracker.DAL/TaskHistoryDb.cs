@@ -1,5 +1,6 @@
 ﻿using BugTracker.BOL;
 using BugTracker.DAL.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,27 @@ namespace BugTracker.DAL
         
         public IEnumerable<TaskHistory> GetAll()
         {
-            return context.TaskHistory.ToList();
+            var list = context.TaskHistory
+                                                   .Include(t => t.Tasks)
+                                                   .Include(u => u.ProjectUser.AppUsers)
+                                                   .Select(x => new TaskHistory()
+                                                   {
+                                                       Id = x.Id,
+                                                       
+                                                       TaskId = x.TaskId,
+                                                       Tasks = x.Tasks,
+                                                       AssigneeId = x.AssigneeId,
+                                                       ProjectUser = new ProjectUser()
+                                                       {
+                                                           Id = x.ProjectUser.Id,
+                                                           ProjectId = x.ProjectUser.ProjectId,
+                                                           UserId = x.ProjectUser.UserId,
+                                                           AppUsers = x.ProjectUser.AppUsers
+                                                       },
+                                                      ModifiedDate = x.ModifiedDate,
+                                                      Status = x.Status,
+                                                   }).ToList();
+            return list;
         }
 
         
