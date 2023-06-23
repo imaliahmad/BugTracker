@@ -3,6 +3,7 @@ using BugTracker.BOL;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using BugTracker.Web.DataTypes;
 
 namespace BugTracker.Web.ViewModels
 {
